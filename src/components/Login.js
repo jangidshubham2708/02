@@ -13,12 +13,15 @@ const Login = () => {
             name,
             mobnum,
             email,
-        } );
+          } );
         setName('');
         setEmail('');
         setMobnum('');
     };
+
     return (
+      <div className="lex items-center justify-center min-h-screen bg-gray-100">
+        <div className="bg-white p-72 rounded-lg shadow-md w-96 ">
         <form onSubmit={handleSubmit}>
      <div>
         <label htmlFor="name">Name:</label>
@@ -26,6 +29,7 @@ const Login = () => {
           type="text"
           id="name"
           value={name}
+          placeholder="Enter Your Name"
           maxLength="18" 
           onChange={(e) => setName(e.target.value)}
           required
@@ -37,6 +41,7 @@ const Login = () => {
         type="email"
         id="email"
         value={email}
+        placeholder="Enter Your Email Adress"
         onChange={(e)=> setEmail(e.target.value)}
         required
         />
@@ -54,7 +59,10 @@ const Login = () => {
         />
        </div>
       <button type="submit">Submit</button>
+      
         </form>
+        </div>
+        </div>
 
     );
 };
