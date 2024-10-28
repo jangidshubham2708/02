@@ -1,87 +1,59 @@
-
+import { Link } from "react-router-dom";
+import Shimmer from "./Shimmer";
 import RestaurantCard from "./Card";
 import { useState, useEffect } from "react";
-import Shimmer from "./Shimmer";
-import { Link } from "react-router-dom";
-import { Card_Api } from "../elementary/URL";
+import resList from "../elementary/resData";
 
 const Body = () => {
-
-  const [listOfRestaurants, setListOfRestraunt] = useState([]);
+  const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
-
-  const [searchText, setSearchText] = useState("");
-
-  console.log("Body Rendered");
+  const [searchText, setSearchText] = useState("");   
 
   useEffect(() => {
-    fetchData();
+    setListOfRestaurants(resList);
+    setFilteredRestaurant(resList);
   }, []);
 
-  const fetchData = async () => {
-    const data = await fetch(
-      Card_Api
+  const handleTopRated = () => {
+    const filteredList = listOfRestaurants.filter(
+      (res) => res.info.avgRating > 4.5
     );
+    setFilteredRestaurant(filteredList);
+  };
 
-    const json = await data.json();
-    console.log(json);
-
-    // Optional Chaining
-    setFilteredRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    setListOfRestraunt(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+  const resetFilters = () => {
+    setFilteredRestaurant(listOfRestaurants);
+    setSearchText("");
   };
 
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
-  ) : ( 
-    <div className="bg-slate-100 ">
-      <div className=" flex flex-wrap px-80">
-        <div className="justify-center peer-hover mx-80">
-          <input
-            type="text"
-            className=" px-24  border border-gray-400 p-1 rounded-l-full "
-            value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
-          />
-          <button className="border border-gray-400 px-5 py-1 rounded-r-full bg-gray-100"
-            onClick={() => {
-              console.log(searchText);
-
-              const filteredRestaurant = listOfRestaurants.filter((res) =>
-                res.info.name.toLowerCase().includes(searchText.toLowerCase())
-              );
-
-              setFilteredRestaurant(filteredRestaurant);
-            }}
-          >
-            Search
-          </button>
-        </div>
+  ) : (
+   
+    <div>
+    <div className="  transition-duration: 150ms">
+      <div className="flex flex-wrap justify-center ">
         <button
-          className=" border border-gray-400 px-5 py-1 rounded-full bg-gray-100 mx-[-1350px]"
-          onClick={() => {
-            const filteredList = listOfRestaurants.filter(
-              (res) => res.info.avgRating > 4.5
-            );
-            setFilteredRestaurant(filteredList);
-          }}
+          className="border border-gray-400 px-5 py-1 rounded-full bg-gray-100 mx-2"
+          onClick={handleTopRated}
         >
           Top Rated Restaurants
         </button>
-       
+        <button
+          className="border border-gray-400 px-5 py-1 rounded-full bg-gray-100"
+          onClick={resetFilters}
+        >
+          Reset
+        </button>
       </div>
-      <div className="flex flex-wrap px-[50px]">
+      <div className="flex flex-wrap px-80">
         {filteredRestaurant.map((restaurant) => (
-          <Link
-          key={restaurant?.info?.id}
-          to={"/restaurants/" + restaurant?.info?.id}
-          >
+          <Link key={restaurant.info.id} to={`/restaurant/${restaurant.info.id}`}>
             <RestaurantCard resData={restaurant} />
           </Link>
         ))}
       </div>
+    </div>
     </div>
   );
 };

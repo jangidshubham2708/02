@@ -1,22 +1,23 @@
 const ShimmerMenu = () => {
-    return (  
-      <div> 
-      <div className="">
- <div className=" p-0 m-4 w-72 h-12 left-[700px] bg-gray-300 rounded-lg animate-pulse relative overflow-hidden"></div>
- <div className=" p-0 m-4 w-72 h-12 left-[700px] bg-gray-300 rounded-lg animate-pulse relative overflow-hidden"></div>
+  return (
+    <div className="flex flex-col items-center p-4 space-y-4">
+      {/* Top Shimmer Boxes */}
+      <div className="flex flex-col items-center space-y-4">
+        <div className="w-72 h-12 bg-gray-300 rounded-lg animate-pulse"></div>
+        <div className="w-72 h-12 bg-gray-300 rounded-lg animate-pulse"></div>
       </div>
-      <div>
-      <div className="p-0 m-4   w-[950px] h-16 left-[400px] bg-gray-300 rounded-lg animate-pulse relative overflow-hidden"></div>
-      <div className="  p-0 m-4 w-[950px] h-16 left-[400px] bg-gray-300 rounded-lg animate-pulse relative overflow-hidden"></div>
-      <div className=" p-0 m-4  w-[950px] h-16 left-[400px] bg-gray-300 rounded-lg animate-pulse relative overflow-hidden"></div>
-      <div className=" p-0 m-4  w-[950px] h-16 left-[400px] bg-gray-300 rounded-lg animate-pulse relative overflow-hidden"></div>
-      <div className="p-0 m-4   w-[950px] h-16 left-[400px] bg-gray-300 rounded-lg animate-pulse relative overflow-hidden"></div>
-      <div className="p-0 m-4   w-[950px] h-16 left-[400px] bg-gray-300 rounded-lg animate-pulse relative overflow-hidden"></div>
-      <div className=" p-0 m-4  w-[950px] h-16 left-[400px] bg-gray-300 rounded-lg animate-pulse relative overflow-hidden"></div>
-      <div className=" p-0 m-4  w-[950px] h-16 left-[400px] bg-gray-300 rounded-lg animate-pulse relative overflow-hidden"></div>
+
+      {/* Main Shimmer Content */}
+      <div className="w-full flex flex-col items-center space-y-4">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <div
+            key={index}
+            className="w-full max-w-4xl h-16 bg-gray-300 rounded-lg animate-pulse"
+          ></div>
+        ))}
       </div>
-     </div> 
-    );
-  };
-  
-  export default ShimmerMenu;
+    </div>
+  );
+};
+
+export default ShimmerMenu;

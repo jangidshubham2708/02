@@ -1,5 +1,6 @@
 import React from "react";
 import backgroundImage from "./background@contact.jpg"
+import instaLogo from "./insta logo.jpeg"
 
 const Contact = () => {
 
@@ -24,8 +25,8 @@ Need assistance? Our customer support team is ready to assist you. Don’t hesit
 <div className="relative z-10 mb-4">
         <a href="https://www.instagram.com/shubhuu.js/" className="inline-block">
           <img
-            src="https://png.pngtree.com/element_our/sm/20180630/sm_5b37de3263964.jpg"
-            alt="Email Icon"
+            src={instaLogo}
+            alt="InstaLogo"
             className="w-16 h-16 hover:scale-105 transition-transform" 
           />
         </a>
