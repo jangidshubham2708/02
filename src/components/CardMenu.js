@@ -33,8 +33,8 @@ const CardMenu = () => {
     );
 
   return (
-    <div className="text-center">
-      <h1 className="font-bold my-6 text-2xl">{text}</h1>
+    <div className="text-center ">
+      <h1 className="font-bold my-6 text-2xl ">{text}</h1>
       <p className="font-bold text-lg">
         {cuisines?.length > 0 ? cuisines.join(", ") : "No cuisines available"} -{" "}
         {costForTwoMessage || "Cost information not available"}

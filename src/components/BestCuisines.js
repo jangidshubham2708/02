@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import Shimmer from "./Shimmer";
+import { useState, useEffect } from "react";  
 import { Card_Api } from "../elementary/URL";
 import { Link } from "react-router-dom";
+import ShimmerBest from "./Shimmer@Best";
 const BestCuisines = () => {
     const [cuisines, setCuisines] = useState([]);
 
@@ -16,17 +16,17 @@ const BestCuisines = () => {
   };
 
   return cuisines.length === 0 ? ( 
-    <Shimmer />
+    <ShimmerBest />
   ) : (
     <div className="">
-    <h1 className="flex flex-wrap justify-center text-xl my-8 bg-slate-50 font-extrabold">Best Cuisines Near Me</h1>
-    <div className="bg-slate-50 ">
-      <div className=" mx-1">
-        <div className="flex flex-wrap justify-center  bg-slate-50">
+    <h1 className="flex flex-wrap justify-center text-xl my-8 font-extrabold">Best Cuisines Near Me</h1>
+    <div className=" ">
+      <div className=" mx-7">
+        <div className="flex flex-wrap justify-center">
           {cuisines.length > 0 ? (
             cuisines.map((cuisineres, index) => (
               <Link key={index} to={cuisineres.link} className="flex bg-white border border-gray-300 rounded-lg shadow-md m-1 p-2 hover:bg-gray-400 ">
-                <h1 className="text-l font-semibold text-center">
+                <h1 className="text-xl font-semibold text-center">
                   {cuisineres.text}
                 </h1>
               </Link>

@@ -1,81 +1,95 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Card_Api, Card_Menu_Img } from "../elementary/URL";
 import Shimmer from "./Shimmer";
 
 const Slider = () => {
-    const [slideInfo, setSlideInfo] = useState(null);
-    const { slideId } = useParams();
-    const [searchText, setSearchText] = useState("");
-    useEffect(() => {
-        fetchMenu();
-    }, []);
+  const [slideInfo, setSlideInfo] = useState(null);
+  const { slideId } = useParams();
+  const [searchText, setSearchText] = useState("");
+  const [filteredSlideArray, setFilteredSlideArray] = useState([]);
+  const scrollContainerRef = useRef(null);
 
-    const fetchMenu = async () => {
-        const data = await fetch(Card_Api + slideId);
-        const json = await data.json();
-        setSlideInfo(json.data);
-        console.log(json);
-    };
-    const handleSearch = () => {
-      const filteredList = listOfRestaurants.filter((res) =>
-        res.info.name.toLowerCase().includes(searchText.toLowerCase())
-      );
-      setFilteredRestaurant(filteredList);
-    };
+  useEffect(() => {
+    fetchMenu();
+  }, []);
 
+  const fetchMenu = async () => {
+    const data = await fetch(Card_Api + slideId);
+    const json = await data.json();
+    setSlideInfo(json.data);
+  };
 
-    if (slideInfo === null) return <Shimmer />;
+  useEffect(() => {
+    if (slideInfo) {
+      const slide = slideInfo?.cards[0]?.card?.card?.gridElements?.infoWithStyle?.info;
+      const slideArray = Array.isArray(slide) ? slide : [];
 
-    const slide = slideInfo?.cards[0]?.card?.card?.gridElements?.infoWithStyle?.info;
-    const slideArray = Array.isArray(slide) ? slide : [];
+      const filteredList = slideArray.filter((item) => {
+        const itemName = item?.info?.name?.toLowerCase() || "";
+        return itemName.includes(searchText.toLowerCase());
+      });
 
- console.log("hey");
- return(
-<div>
-      <div className="  transition-duration: 150ms">
-      <div className="flex flex-wrap justify-center ">
-        <div className="flex items-center">
-          <input
-            type="text"
-            className="px-4 border p-1 rounded-l-full"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            placeholder="Search restaurants..."
-          />
-          <button
-            className="border border-gray-400 px-5 py-1 rounded-r-full bg-gray-100"
-            onClick={handleSearch}
-          >
-            Search
-          </button>
-        </div>
-        </div>
-  <div className=" ">
-     <div className="w-full max-w-6xl mx-auto">
- <h2 className="text-center text-2xl font-semibold "></h2>
- <div className="flex overflow-y-hidden space-y-0 p-4 ">
-   {slideArray.map((item) => {
-     const imageId = item.imageId;
-     return (
-       <div key={imageId} className="flex-shrink-0">
-         {imageId && (
-           <img
-             src={Card_Menu_Img + imageId}
-             alt="Menu item"
-             className="w-32 h-32 object-cover rounded-lg cursor-pointer "
-           />
-         )}
-       </div>
-     );
-   })}
- </div>
- </div>
-</div>
-</div>
-</div>
+      setFilteredSlideArray(filteredList);
+    }
+  }, [searchText, slideInfo]);
 
-);
+  if (slideInfo === null) return <Shimmer />;
+
+  const slide = slideInfo?.cards[0]?.card?.card?.gridElements?.infoWithStyle?.info;
+  const slideArray = Array.isArray(slide) ? slide : [];
+
+   const scrollLeft = () => {
+    scrollContainerRef.current.scrollBy({
+      left: -200, 
+      behavior: "smooth",
+    });
+  };
+
+  const scrollRight = () => {
+    scrollContainerRef.current.scrollBy({
+      left: 200,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <div className="relative ">
+      <h2 className="text-center py-5 text-3xl font-bold ">What's on your mind?</h2>
+      <button
+        onClick={scrollLeft}
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white p-2 rounded-md z-10"
+      >
+        ◀
+      </button>
+      <div
+        ref={scrollContainerRef}
+        className="flex overflow-hidden space-x-8 scrollbar-hide"
+        style={{ scrollBehavior: "smooth" }}
+      >
+        {(searchText ? filteredSlideArray : slideArray).map((item) => {
+          const imageId = item.imageId;
+          return (
+            <div key={imageId} className="flex-shrink-0 ">
+            {imageId && (
+              <img
+                src={Card_Menu_Img + imageId}
+                alt="Menu item"
+                className="w-48 m-[24px] object-cover rounded-lg cursor-pointer "
+              />
+            )}
+          </div>          
+          );
+        })}
+      </div>
+      <button
+        onClick={scrollRight}
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white p-2 rounded-md z-10"
+      >
+        ▶
+      </button>
+    </div>
+  );
 };
 
 export default Slider;

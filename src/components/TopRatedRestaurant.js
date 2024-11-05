@@ -1,51 +1,79 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { Card_Api } from "../elementary/URL";
 import TopRatedCard from "./TopRated@Card";
 
 const TopRated = () => {
-
   const [listOfRestaurants, setListOfRestraunt] = useState([]);
-  console.log("Body Rendered");
+  const scrollContainerRef = useRef(null);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch(
-      Card_Api
-    );
-
+    const data = await fetch(Card_Api);
     const json = await data.json();
-    console.log(json);
-
-    
-    setListOfRestraunt(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-  };
-    return listOfRestaurants.length === 0 ? (
-      <Shimmer />
-    ) : (
-      <div className=" py-6">
-        <div className="w-full max-w-6xl mx-auto">
-          <h2 className="text-center text-2xl font-semibold mb-4">Top Rated Restaurants</h2>
-          <div className="flex space-x-4 overflow-x-auto p-4">
-            <div className="flex space-x-4">
-              {listOfRestaurants.map((restaurant) => (
-                <Link
-                  key={restaurant?.info?.id}
-                  to={"/restaurant/" + restaurant?.info?.id}
-                  className="min-w-[300px] max-w-[300px] flex-shrink-0"
-                >
-                  <TopRatedCard resData={restaurant} />
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+    setListOfRestraunt(
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants || []
     );
   };
-  
-  export default TopRated;
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: -200,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 200,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  if (listOfRestaurants.length === 0) return <Shimmer />;
+
+  return (
+    <div className="relative">
+      <div className="w-full  mx-auto">
+        <h2 className="text-center text-3xl font-bold">Top Rated Restaurants</h2>
+        <button
+          onClick={scrollLeft}
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white p-2 rounded-md z-10"
+        >
+          ◀
+        </button>
+        <div
+          ref={scrollContainerRef}
+          className="flex space-x-4 overflow-x-hidden scrollbar-hide"
+          style={{ scrollBehavior: "smooth" }}
+        >
+          {listOfRestaurants.map((restaurant) => (
+            <Link
+              key={restaurant?.info?.id}
+              to={`/restaurant/${restaurant?.info?.id}`}
+              className=" m-[34px] p-4 flex-shrink-0"
+            >
+              <TopRatedCard resData={restaurant} />
+            </Link>
+          ))}
+        </div>
+        <button
+          onClick={scrollRight}
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white p-2 rounded-md z-10"
+        >
+          ▶
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default TopRated;

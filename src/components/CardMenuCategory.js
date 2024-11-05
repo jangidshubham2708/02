@@ -8,7 +8,7 @@ const CardMenuCategory = ({ data, showItems, setShowIndex}) => {
   return (
     <div>
       {/* Header */}
-      <div className="w-6/12 mx-auto my-4 bg-gray-50 shadow-lg p-4">
+      <div className="w-6/12 mx-auto my-4 bg-gray-50 shadow-lg p-4 transition-transform duration-300 hover:scale-105">
         <div
           className="flex justify-between cursor-pointer"
           onClick={handleClick}

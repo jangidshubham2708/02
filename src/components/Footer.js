@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className= "bg-pink-100 shadow-lg sm:bg-yellow-50 lg:bg-green-50 flex flex-wrap ">
+    <div className= "bg-gradient-to-r from-orange-200 to-orange-400 shadow-lg flex flex-wrap ">
       <div className="text-center mb-6">
         <h1 className="text-4xl font-semibold px-24 p-6">For a better experience, download the Swiggy app now</h1>
       </div>

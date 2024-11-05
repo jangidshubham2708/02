@@ -1,56 +1,81 @@
 import React from "react";
-import backgroundImage from "./background@contact.jpg"
-import instaLogo from "./insta logo.jpeg"
+import { FaLinkedin, FaWhatsapp, FaInstagram, FaEnvelope } from "react-icons/fa";
 
 const Contact = () => {
-
   return (
-    <div className="flex">
-<div className="absolute w-screen  overflow-hidden opacity-30 ">
-<img className="w-[2000]  h-[900]" src={backgroundImage} alt="Image" />
-</div>
-<div className=" relative z-10 pl-32 py-20 text-black text-xl font-serif font-extrabold text-center">
-Need assistance? Our customer support team is ready to assist you. Don’t hesitate to reach out, and we’ll respond as quickly as possible. We aim to resolve your issues and enhance your experience with us
-</div>
-<div className="relative z-10">  
-      <button
-        onClick={() => {
-          window.open("https://www.linkedin.com/in/shubham-kumar-jangid-99b20a29a/", "_blank");
-        }}
-      >
-       LinkedIn
-      </button>
-</div>
-<div className="relative z-10">
-<div className="relative z-10 mb-4">
-        <a href="https://www.instagram.com/shubhuu.js/" className="inline-block">
-          <img
-            src={instaLogo}
-            alt="InstaLogo"
-            className="w-16 h-16 hover:scale-105 transition-transform" 
-          />
-        </a>
+    <div className="flex flex-col items-center bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 min-h-screen py-12 px-6 shadow-xl">
+      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-3xl text-center">
+        <h2 className="text-4xl font-extrabold text-gray-800 mb-4">Contact Us</h2>
+        <p className="text-lg font-medium text-gray-600 mb-8">
+          Reach out to us for support, questions, or any assistance you may need. We're here to help!
+        </p>
+
+        <div className="space-y-6 text-left cursor-pointer ">
+          <div className="flex items-start space-x-3 bg-gray-50 p-6 rounded-lg shadow-sm transition-transform duration-300 hover:scale-105">
+            <FaLinkedin className="text-blue-600 text-3xl" />
+            <div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">LinkedIn</h3>
+              <p className="text-gray-600">
+                Connect with us on LinkedIn to stay updated with our latest developments.
+              </p>
+              <button
+                onClick={() =>
+                  window.open("https://www.linkedin.com/in/shubham-kumar-jangid-99b20a29a/", "_blank")
+                }
+                className="text-blue-600 hover:underline mt-2"
+              >
+                Visit LinkedIn
+              </button>
+            </div>
+          </div>
+          <div className="flex items-start space-x-3 bg-gray-50 p-6 rounded-lg shadow-sm transition-transform duration-300 hover:scale-105">
+            <FaWhatsapp className="text-green-500 text-3xl" />
+            <div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">WhatsApp</h3>
+              <p className="text-gray-600">
+                Chat with us on WhatsApp for quick support and assistance.
+              </p>
+              <button
+                onClick={() => window.open("https://wa.me/9887558883", "_blank")}
+                className="text-green-500 hover:underline mt-2"
+              >
+                Chat on WhatsApp
+              </button>
+            </div>
+          </div>
+          <div className="flex items-start space-x-3 bg-gray-50 p-6 rounded-lg shadow-sm transition-transform duration-300 hover:scale-105">
+            <FaInstagram className="text-pink-500 text-3xl" />
+            <div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Instagram</h3>
+              <p className="text-gray-600">
+                Follow us on Instagram for updates and community highlights.
+              </p>
+              <button
+                onClick={() => window.open("https://www.instagram.com/shubhuu.js/", "_blank")}
+                className="text-pink-500 hover:underline mt-2"
+              >
+                Visit Instagram
+              </button>
+            </div>
+          </div>
+          <div className="flex items-start space-x-3 bg-gray-50 p-6 rounded-lg shadow-sm transition-transform duration-300 hover:scale-105">
+            <FaEnvelope className="text-red-500 text-3xl" />
+            <div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Email</h3>
+              <p className="text-gray-600">
+                Send us an email, and our team will get back to you as soon as possible.
+              </p>
+              <button
+                onClick={() => window.open("mailto:shubhamj8168@gmail.com", "_blank")}
+                className="text-red-500 hover:underline mt-2"
+              >
+                Send Email
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="relative z-10">
-        <button
-      onClick={() => {
-        window.open("https://wa.me/9887558883","_blank");
-      }}
-      >
-       WhatsApp
-       </button>
     </div>
-    <div className="relative z-10 mb-4">
-        <a href="mailto:shubhamj8168@gmail.com" className="inline-block">
-          <img
-            src="https://pngimg.com/d/email_PNG11.png"
-            alt="Email Icon"
-            className="w-16 h-16 hover:scale-105 transition-transform" 
-          />
-        </a>
-      </div>
-      </div>
-</div>
   );
 };
 

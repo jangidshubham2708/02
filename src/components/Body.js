@@ -1,17 +1,24 @@
 import { Link } from "react-router-dom";
-import Shimmer from "./Shimmer";
 import RestaurantCard from "./Card";
 import { useState, useEffect } from "react";
 import resList from "../elementary/resData";
+import ShimmerBody from "./Shimmer@body";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
-  const [searchText, setSearchText] = useState("");   
+  const [searchText, setSearchText] = useState("");
+  const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
-    setListOfRestaurants(resList);
-    setFilteredRestaurant(resList);
+
+    const timer = setTimeout(() => {
+      setListOfRestaurants(resList);
+      setFilteredRestaurant(resList);
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handleTopRated = () => {
@@ -21,39 +28,44 @@ const Body = () => {
     setFilteredRestaurant(filteredList);
   };
 
+  const handleSearch = () => {
+    const filteredList = listOfRestaurants.filter((res) =>
+      res.info.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredRestaurant(filteredList);
+  };
+
   const resetFilters = () => {
     setFilteredRestaurant(listOfRestaurants);
     setSearchText("");
   };
-
-  return listOfRestaurants.length === 0 ? (
-    <Shimmer />
+  return isLoading ? (
+    <ShimmerBody />
   ) : (
-   
     <div>
-    <div className="  transition-duration: 150ms">
-      <div className="flex flex-wrap justify-center ">
-        <button
-          className="border border-gray-400 px-5 py-1 rounded-full bg-gray-100 mx-2"
-          onClick={handleTopRated}
-        >
-          Top Rated Restaurants
-        </button>
-        <button
-          className="border border-gray-400 px-5 py-1 rounded-full bg-gray-100"
-          onClick={resetFilters}
-        >
-          Reset
-        </button>
+      <div className="transition-duration: 150ms">
+        <div className="flex flex-wrap justify-center">
+          <button
+            className="border border-gray-500 px-5 py-1 rounded-full bg-gray-200 mx-2"
+            onClick={handleTopRated}
+          >
+            Promoted Restaurants
+          </button>
+          <button
+            className="border border-gray-500 px-5 py-1 rounded-full bg-gray-200"
+            onClick={resetFilters}
+          >
+            Reset
+          </button>
+        </div>
+        <div className="flex flex-wrap  ">
+          {filteredRestaurant.map((restaurant) => (
+            <Link key={restaurant.info.id} to={`/restaurant/${restaurant.info.id}`}>
+              <RestaurantCard resData={restaurant} />
+            </Link>
+          ))}
+        </div>
       </div>
-      <div className="flex flex-wrap px-80">
-        {filteredRestaurant.map((restaurant) => (
-          <Link key={restaurant.info.id} to={`/restaurant/${restaurant.info.id}`}>
-            <RestaurantCard resData={restaurant} />
-          </Link>
-        ))}
-      </div>
-    </div>
     </div>
   );
 };

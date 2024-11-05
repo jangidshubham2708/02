@@ -1,4 +1,3 @@
-
 import { Card_Img_Cdn } from "../elementary/URL";
 
 const RestaurantCard = (props) => {
@@ -21,17 +20,17 @@ const RestaurantCard = (props) => {
   const filteredCuiseines= cuisines.slice(0,2);
 
   return ( 
-    <div className="m-4 p-4 w-[250px] rounded-lg bg-gray-100 hover:bg-gray-400">
+    <div className="m-[34px] p-6 w-[270px] rounded-lg hover:bg-gray-400 transition-transform duration-300 hover:scale-110">
       <img
-        className="w-56 h-60"
+        className="w-80 h-60 rounded-lg"
         alt="res-logo"
         src={Card_Img_Cdn + cloudinaryImageId}
       />
-      <h3 className="font-extrabold font-sans">{name}</h3>
-      <h4 className="font-semibold">Cuisines-{filteredCuiseines.join(", ")}</h4>
-      <h4 className="font-semibold">{avgRating} stars</h4>
-      <h4 className="font-semibold">₹{costForTwo} For Two</h4>
-      <h4 className="font-semibold">{deliveryTime} minutes</h4>
+      <h3 className="font-extrabold font-sans text-lg">{name}</h3>
+      <h4 className="font-semibold">Cuisines - {filteredCuiseines.join(", ")}</h4>
+      <h4 className="font-semibold">Ratings - {avgRating} stars</h4>
+      <h4 className="font-semibold">Price - {costForTwo}</h4>
+      <h4 className="font-semibold">Estimated Time - {deliveryTime} minutes</h4>
     </div>
   );
 };
