@@ -17,7 +17,7 @@ const ItemList = ({ items}) => {
           className="p-2 m-2 border-gray-200 border-b-2 text-left flex justify-between transition-transform duration-300 hover:scale-105"
         >
           <div className="w-9/12">
-            <div className="py-2 font-bold">
+            <div className="py-2 text-xl font-bold">
               <span>{item.card.info.name}</span>
               <span>
                 - ₹
@@ -26,7 +26,7 @@ const ItemList = ({ items}) => {
                   : item.card.info.defaultPrice / 100}
               </span>
             </div>
-            <p className="text-lg font-serif">{item.card.info.description}</p>
+            <p className="p-4 font-serif text-xl">{item.card.info.description}</p>
           </div>
           <div className="w-3/12 p-4">
           <div className="absolute">
@@ -38,7 +38,7 @@ const ItemList = ({ items}) => {
               </button>
             </div>
             <div className="w-56">
-            <img src={Card_Menu_Img + item.card.info.imageId} className="w-full" />
+            <img src={Card_Menu_Img + item.card.info.imageId} className="w-48 h-52" />
             </div>
           </div>
         </div>
